@@ -25,10 +25,12 @@ public class NatsTest {
         String response = new String(msg.getData(), StandardCharsets.UTF_8);
         System.out.println(response);
     }
+
     @Test
     void receiveTest2() throws Exception {
         Connection nc = Nats.connect("nats://localhost:4222");
-        Dispatcher d = nc.createDispatcher((msg) -> {});
+        Dispatcher d = nc.createDispatcher((msg) -> {
+        });
 
         Subscription s = d.subscribe("test", (msg) -> {
             String response = new String(msg.getData(), StandardCharsets.UTF_8);
@@ -37,4 +39,14 @@ public class NatsTest {
         d.unsubscribe(s, 100);
     }
 
+    @Test
+    void requestReplyTest() throws Exception {
+        //single URL
+        Connection nc = Nats.connect("nats://localhost:4222");
+        for (int i = 0; i < 100; i++) {
+            Message message = nc.request("dataIn", String.valueOf(i).getBytes(StandardCharsets.UTF_8), Duration.ofSeconds(1000));
+            System.out.println("request-id: " + i + ", response-id: " + new String(message.getData(), StandardCharsets.UTF_8));
+        }
+
+    }
 }

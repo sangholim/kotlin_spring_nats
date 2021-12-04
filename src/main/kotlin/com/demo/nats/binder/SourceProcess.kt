@@ -10,9 +10,9 @@ class SourceProcess {
 
     @StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
-    fun transform(message: Any?): String {
-        println(message)
-        return "test"
+    fun transform(message: Any?): Any? {
+        println("request-id: $message, response-id: $message")
+        return message
     }
 
 }
