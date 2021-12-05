@@ -30,7 +30,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	//implementation("org.springframework.cloud:spring-cloud-stream")
 	// nats
-
+	implementation("io.nats:nats-spring-boot-starter:0.5.0")
 	implementation("io.nats:nats-spring-cloud-stream-binder:0.5.0")
 	implementation("io.nats:nats-spring:0.5.0")
 

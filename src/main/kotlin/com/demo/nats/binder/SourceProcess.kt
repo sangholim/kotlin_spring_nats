@@ -5,14 +5,15 @@ import org.springframework.cloud.stream.annotation.StreamListener
 import org.springframework.cloud.stream.messaging.Processor
 import org.springframework.messaging.handler.annotation.SendTo
 
-@EnableBinding(Processor::class)
+//@EnableBinding(Processor::class)
 class SourceProcess {
-
+    /*
     @StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
     fun transform(message: Any?): Any? {
         println("request-id: $message, response-id: $message")
         return message
     }
+     */
 
 }

@@ -1,15 +1,41 @@
+logging:
+  level:
+    org:
+      springframework:
+        cloud: DEBUG
+
 spring:
   cloud:
     stream:
       bindings:
-        input:
-          destination: dataIn
-          binder: nats
-        output:
-          destination: dataOut
-          binder: nats
-
-nats:
-  spring:
-    connectionname: nats
-    server: nats://localhost:4222
+        userIn:
+          destination: users.profile
+          binder: nats1
+        userOut:
+          destination: users.profile
+          binder: nats1
+        accountIn:
+          destination: account.register
+          binder: nats2
+        accountOut:
+          destination: account.register
+          binder: nats2
+      binders:
+        nats1:
+          type: nats
+          environment:
+            nats:
+              spring:
+                cloud:
+                  stream:
+                    binder:
+                      server: nats://localhost:4222
+        nats2:
+          type: nats
+          environment:
+            nats:
+              spring:
+                cloud:
+                  stream:
+                    binder:
+                      server: nats://localhost:4222
