@@ -5,8 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.List;
 
 public class NatsTest {
+
+    private final List<String> ACCOUNT_DESTINATIONS = List.of("account.register");
+
+    private final List<String> USER_DESTINATIONS = List.of("users.profile");
 
     @Test
     void sendTest() throws Exception {
@@ -49,4 +54,25 @@ public class NatsTest {
         }
 
     }
+
+    @Test
+    void accountDestinationsTest() throws Exception {
+        //single URL
+        Connection nc = Nats.connect("nats://localhost:4222");
+        for (String destination : ACCOUNT_DESTINATIONS) {
+            Message message = nc.request(destination, destination.concat(" test").getBytes(StandardCharsets.UTF_8), Duration.ofSeconds(1000));
+            System.out.println(destination + " > " + new String(message.getData(), StandardCharsets.UTF_8));
+        }
+    }
+
+    @Test
+    void userDestinationsTest() throws Exception {
+        //single URL
+        Connection nc = Nats.connect("nats://localhost:4222");
+        for (String destination : USER_DESTINATIONS) {
+            Message message = nc.request(destination, destination.concat(" test").getBytes(StandardCharsets.UTF_8), Duration.ofSeconds(1000));
+            System.out.println(destination + " > " + new String(message.getData(), StandardCharsets.UTF_8));
+        }
+    }
+
 }
